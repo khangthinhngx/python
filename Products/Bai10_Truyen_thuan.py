@@ -35,6 +35,7 @@ class App(tk.Tk):
         check, value = isFloat(value_get)
         if check == False:
             msg.showwarning('Sai input', 'Ban phai nhap chu so')
+            self.entry.delete(0, 'end')
             self.entry.focus_set()
             return
         else:
@@ -54,7 +55,7 @@ class App(tk.Tk):
             self.btn = tk.Button(self.newWin, text='OK',
                                  command=self.clear, width=5)
 
-            #grid
+            # grid
             self.btn.grid(row=1, column=0)
             self.canvas.grid(row=0, column=0)
 
