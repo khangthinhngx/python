@@ -62,7 +62,7 @@ class App(tk.Tk):
                 170+self.pX[self.i], 170-self.pY[self.i], 180 + self.pX[self.i], 180-self.pY[self.i], outline='red', fill='red')
             self.i = self.i+1
             self.canvas.after(20, self.canvas.delete, self.cid)
-            self.after(20, self.draw)
+            self.after(15, self.draw)
 
     def start(self):
         self.btn_start.configure(state='disabled')
