@@ -1,4 +1,3 @@
-from fileinput import filename
 import tkinter as tk
 from tkinter import *
 from tkinter import PhotoImage, filedialog

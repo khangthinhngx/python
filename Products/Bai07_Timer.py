@@ -2,8 +2,6 @@ import tkinter as tk
 from tkinter import *
 import math
 
-from matplotlib.pyplot import fill
-
 
 class App(tk.Tk):
     def __init__(self):
