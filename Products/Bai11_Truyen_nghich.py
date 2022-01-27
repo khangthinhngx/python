@@ -24,11 +24,13 @@ class App(tk.Tk):
         self.radius = 0
 
     def nhap(self):
+        # ve cua so moi
         self.newWin = Toplevel(self)
         self.newWin.title('Nhap ban kinh')
         self.newWin.geometry('380x150')
         self.newWin.resizable(FALSE, FALSE)
         self.newWin.focus_force()
+
         self.radius_input = tk.StringVar()
 
         self.lbl_nhap = tk.Label(self.newWin, text='Nhap ban kinh', font=(10))
@@ -59,13 +61,17 @@ class App(tk.Tk):
             self.entry.focus_set()
             return
         else:
+            # xoa canvas ban dau
             self.canvas.destroy()
+            # ve lai geometry va canvas moi
             self.geometry('{w}x{h}'.format(
                 w=2*self.radius+20, h=2*self.radius+50))
             self.canvas = tk.Canvas(
                 self, relief=tk.SUNKEN, bd=2, width=2*self.radius+12, height=2*self.radius+12)
             self.canvas.grid(row=0, column=0)
+            # xoa cua so input
             self.newWin.destroy()
+            # ve hinh tron
             self.canvas.create_oval(
                 10, 10, 2*self.radius+10, 2*self.radius+10, fill='red', outline='red')
 
