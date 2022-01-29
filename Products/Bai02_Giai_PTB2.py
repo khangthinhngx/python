@@ -1,44 +1,48 @@
 import tkinter as tk
 from tkinter import messagebox as msg
+import math
+
 
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title('Bai Thuc Hanh So 2')
         # widget: nut dieu khien
-        lbl_nhap_a = tk.Label(self, text = 'Nhap a')  
-        lbl_nhap_b = tk.Label(self, text = 'Nhap b')  
-        lbl_nhap_c = tk.Label(self, text = 'Nhap c')
-        lbl_nghiem = tk.Label(self, text = 'Nghiem')
+        lbl_nhap_a = tk.Label(self, text='Nhap a')
+        lbl_nhap_b = tk.Label(self, text='Nhap b')
+        lbl_nhap_c = tk.Label(self, text='Nhap c')
+        lbl_nghiem = tk.Label(self, text='Nghiem')
 
         self.a = tk.StringVar()
         self.b = tk.StringVar()
         self.c = tk.StringVar()
 
-        self.ent_nhap_a = tk.Entry(self, justify = tk.RIGHT, textvariable = self.a)
-        self.ent_nhap_b = tk.Entry(self, justify = tk.RIGHT, textvariable = self.b)
-        self.ent_nhap_c = tk.Entry(self, justify = tk.RIGHT, textvariable = self.c)
- 
-        self.lbl_ket_qua = tk.Label(self, bg = 'white', relief = tk.SUNKEN)
+        self.ent_nhap_a = tk.Entry(self, justify=tk.RIGHT, textvariable=self.a)
+        self.ent_nhap_b = tk.Entry(self, justify=tk.RIGHT, textvariable=self.b)
+        self.ent_nhap_c = tk.Entry(self, justify=tk.RIGHT, textvariable=self.c)
 
-        btn_giai = tk.Button(self, text = 'Giai', width = 7, command = self.btn_giai_click)
-        btn_xoa = tk.Button(self, text = 'Xoa', width = 7, command = self.btn_xoa_click)
-        btn_thoat = tk.Button(self, text = 'Thoat', width = 7)
+        self.lbl_ket_qua = tk.Label(self, bg='white', relief=tk.SUNKEN)
 
-        lbl_nhap_a.grid(row = 0, column = 0, padx = 10, pady = 10, sticky = tk.W)
-        lbl_nhap_b.grid(row = 1, column = 0, padx = 10, pady = 10, sticky = tk.W)
-        lbl_nhap_c.grid(row = 2, column = 0, padx = 10, pady = 10, sticky = tk.W)
-        lbl_nghiem.grid(row = 3, column = 0, padx = 10, pady = 10, sticky = tk.W)
+        btn_giai = tk.Button(self, text='Giai', width=7,
+                             command=self.btn_giai_click)
+        btn_xoa = tk.Button(self, text='Xoa', width=7,
+                            command=self.btn_xoa_click)
+        btn_thoat = tk.Button(self, text='Thoat', width=7)
 
-        self.ent_nhap_a.grid(row = 0, column = 1, padx = 10, pady = 10, ipady = 3)
-        self.ent_nhap_b.grid(row = 1, column = 1, padx = 10, pady = 10, ipady = 3)
-        self.ent_nhap_c.grid(row = 2, column = 1, padx = 10, pady = 10, ipady = 3)
+        lbl_nhap_a.grid(row=0, column=0, padx=10, pady=10, sticky=tk.W)
+        lbl_nhap_b.grid(row=1, column=0, padx=10, pady=10, sticky=tk.W)
+        lbl_nhap_c.grid(row=2, column=0, padx=10, pady=10, sticky=tk.W)
+        lbl_nghiem.grid(row=3, column=0, padx=10, pady=10, sticky=tk.W)
 
-        self.lbl_ket_qua.grid(row = 3, column = 1, columnspan = 2, padx = 10, 
-                         pady = 10, ipady = 3, sticky = tk.NSEW)
-        btn_giai.grid(row = 0, column = 2, padx = 10, pady = 10, ipadx = 10)
-        btn_xoa.grid(row = 1, column = 2, padx = 10, pady = 10, ipadx = 10)
-        btn_thoat.grid(row = 2, column = 2, padx = 10, pady = 10, ipadx = 10)
+        self.ent_nhap_a.grid(row=0, column=1, padx=10, pady=10, ipady=3)
+        self.ent_nhap_b.grid(row=1, column=1, padx=10, pady=10, ipady=3)
+        self.ent_nhap_c.grid(row=2, column=1, padx=10, pady=10, ipady=3)
+
+        self.lbl_ket_qua.grid(row=3, column=1, columnspan=2, padx=10,
+                              pady=10, ipady=3, sticky=tk.NSEW)
+        btn_giai.grid(row=0, column=2, padx=10, pady=10, ipadx=10)
+        btn_xoa.grid(row=1, column=2, padx=10, pady=10, ipadx=10)
+        btn_thoat.grid(row=2, column=2, padx=10, pady=10, ipadx=10)
 
         self.ent_nhap_a.focus_set()
 
@@ -54,7 +58,7 @@ class App(tk.Tk):
         value_a = self.a.get()
         value_b = self.b.get()
         value_c = self.c.get()
- 
+
         result, a = isfloat(value_a)
         if result == False:
             msg.showerror('Error', 'Ban phai nhap a la chu so!')
@@ -73,15 +77,53 @@ class App(tk.Tk):
             self.ent_nhap_c.focus_set()
             return
 
-        d = a + b + c
-        s = '%.2f' % d
-        self.lbl_ket_qua.configure(text = s)
+        # calculate
+        ans = 0
+        # 1: vo nghiem
+        # 2: vo so nghiem
+        # 3: co nghiem
+        # 4: co 2 nghiem
+        x = 0
+        if a == 0:
+            if b == 0:
+                if c == 0:
+                    ans = 2
+                else:
+                    ans = 1
+            else:
+                ans = 3
+                if c == 0:
+                    x = 0
+                else:
+                    x = -c/b
+        else:
+            delta = b*b - 4*a*c
+            if delta < 0:
+                ans = 1
+            elif delta == 0:
+                ans = 3
+                x = -b / (2*a)
+            else:
+                ans = 4
+                x1 = (-b + math.sqrt(delta)) / (2*a)
+                x2 = (-b - math.sqrt(delta)) / (2*a)
+
+        text = ''
+        if ans == 1:
+            text = 'Phuong trinh vo nghiem'
+        elif ans == 2:
+            text = 'Phuong trinh co vo so nghiem'
+        elif ans == 3:
+            text = 'x = %.2f' % x
+        else:
+            text = 'x1 = %.2f;  x2 = %.2f' % (x1, x2)
+        self.lbl_ket_qua.configure(text=text)
 
     def btn_xoa_click(self):
         self.ent_nhap_a.delete(0, tk.END)
         self.ent_nhap_b.delete(0, tk.END)
         self.ent_nhap_c.delete(0, tk.END)
-        self.lbl_ket_qua.configure(text = '')
+        self.lbl_ket_qua.configure(text='')
         self.ent_nhap_a.focus_set()
 
 
